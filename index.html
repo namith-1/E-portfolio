@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">ePortfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            min-height: 100vh;
+            box-shadow: 0 0 40px rgba(0,0,0,0.08);
+            border-radius: 0;
+        }
+
+        .nav {
+            padding: 2rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0 1rem;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: #333;
+        }
+
+        .header {
+            padding: 4rem 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .content {
+            padding: 2rem 3rem;
+            min-height: 60vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quick-links {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid #eee;
+        }
+
+        .quick-links h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .quick-link.internal {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .quick-link.internal:hover {
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
+        }
+
+        .link-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .link-category h4 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .work-item {
+            text-align: center;
+        }
+
+        .work-image {
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #999;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .work-item:hover .work-image {
+            transform: translateY(-5px);
+        }
+
+        .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .work-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .skills-section {
+            margin-top: 3rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .skill-category h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #333;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .contact-item h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .contact-item a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #333;
+        }
+
+        .resume-download {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        .personal-statement {
+            background: #f9f9f9;
+            padding: 3rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .personal-statement p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .link-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .link-card h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .link-btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background: #555;
+            transform: translateY(-1px);
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .social-card:hover {
+            transform: scale(1.05);
+        }
+
+        .social-card a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .social-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1.5rem 2rem;
+            }
+            
+            .nav-btn {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            
+            .header {
+                padding: 3rem 2rem 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .link-grid, .social-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+             <button class="nav-btn active" onclick="showSection('about', this)">ABOUT</button>
+            <button class="nav-btn " onclick="showSection('work', this)">PROJECTS</button>
+            <button class="nav-btn" onclick="showSection('contact', this)">CONTACT</button>
+            <button class="nav-btn" onclick="showSection('resume', this)">RESUME</button>
+            <button class="nav-btn" onclick="showSection('links', this)">LINKS</button>
+        </nav>
+
+        <header class="header">
+            <h1 id="full-name"></h1>
+            <p id="title-description"></p>
+        </header>
+
+        <div class="content">
+            <section id="work" class="section"></section>
+            <section id="about" class="section active"></section>
+            <section id="contact" class="section"></section>
+            <section id="resume" class="section"></section>
+            <section id="education" class="section"></section>
+            <section id="links" class="section"></section>
+        </div>
+    </div>
+
+    <script>
+        // ==================== EDIT YOUR DETAILS HERE ====================
+        
+        // Personal Information
+        const personalInfo = {
+            fullName: "Namith Raj",
+            title: "Computer Science Undergraduate at IIIT Sricity and Web Developer",
+            profileImage: ""
+        };
+
+        // Quick Links for Home Page
+        const quickLinks = {
+            internal: [
+                { title: "About Me", section: "about" },
+                { title: "My Resume", section: "resume" },
+                { title: "Contact Info", section: "contact" },
+                { title: "Education", section: "education" },
+                { title: "All Links", section: "links" }
+            ],
+            external: [
+                { title: "LinkedIn Profile", url: "https://linkedin.com/in/mahimarao" },
+                { title: "GitHub", url: "https://github.com/mahimarao" },
+                { title: "Research Papers", url: "https://scholar.google.com/citations?user=example" },
+                { title: "Design Portfolio", url: "https://behance.net/mahimarao" },
+                { title: "Medium Articles", url: "https://medium.com/@mahimarao" }
+            ]
+        };
+
+        // Work/Projects
+        const workSamples = [
+            {
+                title: "E-learning website",
+                description: "A E-learning website with Progress Tracking and Gamification.",
+                image: "/images/Izumi_screenshot.png",
+                link: "https://github.com/namith-1"
+            },
+            {
+                title: "Simple Cart Management webiste",
+                description: "Built using MERN stack,  React for frontend.",
+                image: "/images/screenshot-for-readme.png",
+                link: "https://github.com/namith-1"
+            },
+            {
+                title: "Vehicle Routing System",
+                description: "Single source vehicle routing using ALNS local search algorithm",
+                image: "",
+                link: "https://github.com/namith-1"
+            },
+          
+        ];
+
+        // About/Skills
+        const aboutInfo = {
+           description: "I am an undergraduate student at IIIT Sri City, pursuing Computer Science and Engineering. I have a strong interest in web development and have built some good projects in this domain. Along with programming, I am also curious about mathematics and various fields of science, which inspire my problem-solving approach and technical thinking.",
+
+skills: {
+    "Technical Skills": [
+        "HTML/CSS",
+        "JavaScript",
+        "C/C++",
+        "Python",
+        "SQL",
+        "MongoDB",
+        "Docker"
+    ],
+    "Frameworks and Libraries": [
+        "Node.js",
+        "Express.js",
+        "React"
+    ],
+    
+}
+
+        };
+
+        // Education
+        const education = [
+            {
+                degree: "BTech in Computer Science and Engeneering",
+                institution: "IIIT SriCity",
+                years: "2023 - Present",
+                description: "Current CGPA : 8.4"
+            },
+            {
+                degree: "PUC",
+                institution: "Narayana PU College Bengaluru",
+                years: "2021 - 2023",
+                description: "Marks Percentage : 91%"
+            },
+            {
+                degree: "10th",
+                institution: "Pragathi The School Bengaluru",
+                years: "2020",
+                description: "Marks Percentage : 92%"
+            }
+        ];
+
+        // Contact Information
+        const contactInfo = {
+            email: "namithraj.d23@iiits.in",
+            phone: "+91 8431457266",
+            linkedin: "linkedin.com/in/namith-raj-80796128a",
+            website: "www.mahimarao.design",
+            location: "Bengaluru"
+        };
+
+        // Links Information
+        const linksInfo = {
+            professionalLinks: [
+          
+                {
+                    title: "GitHub",
+                    description: "Check out my projects and code repositories.",
+                    url: "https://github.com/namith-1",
+                    buttonText: "View Code"
+                },
+                {
+                    title: "LinkedIn",
+                    description: "Check out my Info",
+                    url: "linkedin.com/in/namith-raj-80796128a",
+                    buttonText: "Checkout"
+                }
+            ],
+            socialLinks: [
+             
+           
+            ]
+        };
+
+        // Resume Information
+        const resumeInfo = {
+            resumeUrl: "/Namith_resume.pdf",
+            summary: "Download my complete resume to learn more about my experience, research publications, and project details."
+        };
+
+        // ==================== END OF EDITABLE CONTENT ====================
+
+        function initializePortfolio() {
+            document.getElementById('page-title').textContent = `${personalInfo.fullName} - Portfolio`;
+            document.getElementById('full-name').textContent = personalInfo.fullName;
+            document.getElementById('title-description').textContent = personalInfo.title;
+            
+            populateWork();
+            populateAbout();
+            populateContact();
+            populateResume();
+            populateEducation();
+            populateLinks();
+        }
+
+        function populateWork() {
+            const section = document.getElementById('work');
+            let workHtml="";
+            
+            workHtml += `
+                <div class="work-grid">
+            `;
+            
+            workSamples.forEach(work => {
+                workHtml += `
+                    <div class="work-item">
+                        <div class="work-image">
+                            ${work.image ? `<img src="${work.image}" alt="${work.title}">` : work.title}
+                        </div>
+                        <div class="work-title">${work.title}</div>
+                        <div class="work-description">${work.description}</div>
+                    </div>
+                `;
+            });
+            
+            workHtml += '</div>';
+            section.innerHTML = workHtml;
+        }
+
+function populateAbout() {
+    const section = document.getElementById('about');
+    let aboutHtml = `
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            ${aboutInfo.description.split('\n\n').map(paragraph => `<p>${paragraph.trim()}</p>`).join('')}
+        </div>
+        
+        <div class="skills-section">
+            <h3 class="section-title">Skills & Expertise</h3>
+            <div class="skills-grid">
+    `;
+    
+    Object.entries(aboutInfo.skills).forEach(([category, skills]) => {
+        aboutHtml += `
+            <div class="skill-category">
+                <h4>${category}</h4>
+                <ul class="skill-list">
+                    ${skills.map(skill => `<li>${skill}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    });
+    
+    aboutHtml += '</div></div>';
+    
+    // Add a new section for Education
+    aboutHtml += `<h2 class="section-title" style="margin-top: 3rem;">Education</h2>`;
+    
+    education.forEach(edu => {
+        aboutHtml += `
+            <div class="card">
+                <h3>${edu.degree}</h3>
+                <div class="card-meta">${edu.institution} | ${edu.years}</div>
+                <p>${edu.description}</p>
+            </div>
+        `;
+    });
+    
+    section.innerHTML = aboutHtml;
+}
+
+        function populateContact() {
+            const section = document.getElementById('contact');
+            section.innerHTML = `
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p><a href="mailto:${contactInfo.email}">${contactInfo.email}</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Phone</h4>
+                        <p><a href="tel:${contactInfo.phone}">${contactInfo.phone}</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>LinkedIn</h4>
+                        <p><a href="https://${contactInfo.linkedin}" target="_blank">${contactInfo.linkedin}</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Website</h4>
+                        <p><a href="https://${contactInfo.website}" target="_blank">${contactInfo.website}</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Location</h4>
+                        <p>${contactInfo.location}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function populateResume() {
+            const section = document.getElementById('resume');
+            section.innerHTML = `
+                <h2 class="section-title">Resume</h2>
+                <div class="resume-download">
+                    <p style="color: #666; margin-bottom: 2rem;">${resumeInfo.summary}</p>
+                    <a href="${resumeInfo.resumeUrl}" class="download-btn" download>Download Resume PDF</a>
+                </div>
+            `;
+        }
+
+        function populateEducation() {
+            const section = document.getElementById('education');
+            let educationHtml = '<h2 class="section-title">Education</h2>';
+            
+            education.forEach(edu => {
+                educationHtml += `
+                    <div class="card">
+                        <h3>${edu.degree}</h3>
+                        <div class="card-meta">${edu.institution} | ${edu.years}</div>
+                        <p>${edu.description}</p>
+                    </div>
+                `;
+            });
+            
+            section.innerHTML = educationHtml;
+        }
+
+        function populateLinks() {
+            const section = document.getElementById('links');
+            let linksHtml = `
+                <h2 class="section-title">Links</h2>
+                
+                <h3 style="font-size: 1.3rem; color: #333; margin-bottom: 1rem; font-weight: 400;">Professional Links</h3>
+                <div class="link-grid">
+            `;
+            
+            linksInfo.professionalLinks.forEach(link => {
+                linksHtml += `
+                    <div class="link-card">
+                        <h4>${link.title}</h4>
+                        <p>${link.description}</p>
+                        <a href="${link.url}" class="link-btn" target="_blank">${link.buttonText}</a>
+                    </div>
+                `;
+            });
+            
+            linksHtml += `
+                </div>
+                
+                <h3 style="font-size: 1.3rem; color: #333; margin: 3rem 0 1rem; font-weight: 400;">Social Media</h3>
+                <div class="social-links">
+            `;
+            
+            linksInfo.socialLinks.forEach(social => {
+                linksHtml += `
+                    <div class="social-card">
+                        <a href="${social.url}" target="_blank">
+                            <h4>${social.platform}</h4>
+                            <p style="font-size: 0.9rem; margin: 0;">${social.description}</p>
+                        </a>
+                    </div>
+                `;
+            });
+            
+            linksHtml += '</div>';
+            section.innerHTML = linksHtml;
+        }
+
+        function navigateToSection(sectionId) {
+            const targetButton = document.querySelector(`[onclick*="${sectionId}"]`);
+            if (targetButton) {
+                showSection(sectionId, targetButton);
+            }
+        }
+
+        function showSection(sectionId, button) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section and activate button
+            document.getElementById(sectionId).classList.add('active');
+            button.classList.add('active');
+        }
+
+        // Initialize the portfolio when the page loads
+        document.addEventListener('DOMContentLoaded', initializePortfolio);
+    </script>
+</body>
+</html>
