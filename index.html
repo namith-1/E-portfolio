@@ -622,7 +622,7 @@ skills: {
                 {
                     title: "LinkedIn",
                     description: "Check out my Info",
-                    url: "linkedin.com/in/namith-raj-80796128a",
+                    url: "https://linkedin.com/in/namith-raj-80796128a",
                     buttonText: "Checkout"
                 }
             ],
@@ -661,18 +661,21 @@ skills: {
                 <div class="work-grid">
             `;
             
-            workSamples.forEach(work => {
-                workHtml += `
-                    <div class="work-item">
-                        <div class="work-image">
-                            ${work.image ? `<img src="${work.image}" alt="${work.title}">` : work.title}
-                        </div>
-                        <div class="work-title">${work.title}</div>
-                        <div class="work-description">${work.description}</div>
-                    </div>
-                `;
-            });
-            
+workSamples.forEach(work => {
+    workHtml += `
+        <div class="work-item">
+            <div class="work-image">
+                ${work.image 
+                    ? `<a href="${work.link}" target="_blank"><img src="${work.image}" alt="${work.title}"></a>` 
+                    : `<a href="${work.link}" target="_blank">${work.title}</a>`}
+            </div>
+            <div class="work-title">
+                <a href="${work.link}" target="_blank">${work.title}</a>
+            </div>
+            <div class="work-description">${work.description}</div>
+        </div>
+    `;
+});
             workHtml += '</div>';
             section.innerHTML = workHtml;
         }
