@@ -687,6 +687,11 @@ function populateAbout() {
         <div class="about-content">
             ${aboutInfo.description.split('\n\n').map(paragraph => `<p>${paragraph.trim()}</p>`).join('')}
         </div>
+
+         <h3 class="section-title">Personal Reflection</h3>
+        <div class="about-content">
+            <p>I am confident in my ability to work hard to learn new skills, and fulfill my commitments</p>
+        </div>
         
         <div class="skills-section">
             <h3 class="section-title">Skills & Expertise</h3>
@@ -709,6 +714,7 @@ function populateAbout() {
     // Add a new section for Education
     aboutHtml += `<h2 class="section-title" style="margin-top: 3rem;">Education</h2>`;
     
+
     education.forEach(edu => {
         aboutHtml += `
             <div class="card">
@@ -719,6 +725,21 @@ function populateAbout() {
         `;
     });
     
+    aboutHtml += ` <h3 class="section-title">Achicvements</h3>
+        <div class="about-content">
+            <p><b>2nd place </b>  : CodeSprint(CP contest) at IIIT Sricity</p>
+            <p><b>1258 Rating</b> :  Pupil at CodeForces</p>
+
+        </div>`
+
+       aboutHtml += ` <h3 class="section-title">Extracurricular Activities</h3>
+        <div class="about-content">
+            <p><b>7500 trophies Max</b> : At Clash Royale</p>
+            <p><b>Won 2nd place in Smash karts</b> : Conducted at IIIT Sricity</p>
+
+        </div>`
+
+
     section.innerHTML = aboutHtml;
 }
 
